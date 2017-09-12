@@ -37,8 +37,8 @@ def predict(network, im, output_blob, args):
 
 
 def presolve(net, args):
-	net.blobs["data"].reshape(args.batch_size, 3, args.image_size, args.image_size)
-	net.blobs["gt"].reshape(args.batch_size, 1, args.image_size, args.image_size)
+	net.blobs["data"].reshape(1, 3, args.image_size, args.image_size)
+	net.blobs["gt"].reshape(1, 1, args.image_size, args.image_size)
 
 
 def main(args):
