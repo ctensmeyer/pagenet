@@ -67,9 +67,8 @@ def main(args):
 		cv2.imwrite(out_fn, raw)
 
 		post, coords = post_process(raw)
-		print coords.shape
 		for idx2 in [1, 2, 3, 0]:
-			fd.write('%d,%d,' % (width * coords[0][idx2][0] / 256., height * coords[0][idx2][1] / 256.))
+			fd.write('%d,%d,' % (width * coords[idx2][0] / 256., height * coords[idx2][1] / 256.))
 		fd.write('\n')
 
 		out_fn = os.path.join(args.out_dir, f.replace('/','_')[:-4] + "_post.png")
