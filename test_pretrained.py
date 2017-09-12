@@ -9,7 +9,7 @@ import cv2
 from process_pixel_labels import post_process
 
 NET_FILE = './models/cbad_train_val.prototxt'
-WEIGHT_FILE = './models/cbad_weights.prototxt'
+WEIGHT_FILE = './models/cbad_weights.caffemodel'
 
 
 def safe_mkdir(_dir):
