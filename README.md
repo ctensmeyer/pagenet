@@ -95,4 +95,31 @@ python render_quads.py manifest dataset_dir out_dir
 
 ## Dependencies
 
-The python scripts depend on OpenCV 3.2, Matplotlib, 
+The python scripts depend on OpenCV 3.2, Matplotlib, Numpy, and Caffe.
+
+## Docker
+
+For those who don't want to install the dependencies, I have created a docker image to run this code. You must have the [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) plugin installed to use it though you can still run our models on CPU (not recommended).
+
+The usage for the docker container is
+
+```
+nvidia-docker run -v $HOST_WORK_DIRECTORY:/data tensmeyerc/icdar2017:pagenet python $SCRIPT $ARGS
+```
+
+`$HOST_WORK_DIRECTORY` is a directory on your machine that is mounted on `/data` inside of the docker container (using -v).  It's the only way to expose files to the docker container.
+`$SCRIPT` is one of the scripts described above.  `$ARGS` are the normal arguments you pass to the python script.  Note that any file paths passed as arguments must begin with `/data` to be visible to the docker container.
+There is no need to download the container ahead of time.  If you have docker and nvidia-docker installed, running the above commands will pull the docker image (~2GB) if it has not been previously pulled.
+
+## Citation
+
+If you find this code useful to your research, please cite our paper:
+
+```
+@article{tensmeyer2017_pagenet,
+  title={PageNet: Page Boundary Extraction in Historical Handwritten Documents},
+  author={Tensmeyer, Chris and Davis, Brian and Wigington, Curtis and Lee, Iain and Barrett, Bill},
+  journal={arXiv preprint arXiv:1709.01618},
+  year={2017},
+}
+```
