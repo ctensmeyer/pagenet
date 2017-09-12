@@ -80,7 +80,7 @@ def get_args():
 	parser.add_argument("out_file", type=str, 
 				help="Output file")
 
-	parser.add_argument("--out-dir", type=str, default=out,
+	parser.add_argument("--out-dir", type=str, default='out',
 				help="")
 	parser.add_argument("--gpu", type=int, default=0,
 				help="GPU to use for running the network")
