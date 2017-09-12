@@ -37,7 +37,7 @@ optional arguments:
 `--gpu` is for passing the device ID of the GPU to use.  If it is negative, CPU mode is used.  Specifying `--out-dir` will allow you to dump both the raw and post processed predictions as images.  
 
 
-### Training
+### Training Your Own Models
 
 `train.py` has the following usage
 
@@ -79,9 +79,43 @@ optional arguments:
 `solver_file` points to a caffe solver.prototxt file.  Such a file is included in the repo.  The training script expects that the network used for training to begin and end like the included `train_val.prototxt` file, but the middle layers can be changed.
 `dataset_dir` is the directory containing the training and validation images.  The file paths listed in `train_manifest` and `val_manifest` are relative to `dataset_dir` and are listed one per line.
 
-`--gpu` is for passing the device ID of the GPU to use.  If it is negative, CPU mode is used.
+`--gpu` is for passing the device ID of the GPU to use.  If it is negative, CPU mode is used.   `--debug-dir` defaults to `debug` and if it is not the empty string, predictions and metrics will be dumped at intervals specified by `--gt-interval` and `--min-interval`.  This can help with selecting the best model from the snapshots.
 
 The optional arguments have reasonable defaults.  If you're curious about their exact meaning, I suggest you look at the code.
+
+### Testing Your Own Models
+
+If you have trained your own model with `train.py`, you can test it with `test.py`.  The usage is
+```
+usage: test.py [-h] [--out-dir OUT_DIR] [--gpu GPU] [-c] [-m MEAN] [-s SCALE]
+               [--image-size IMAGE_SIZE] [--print-count PRINT_COUNT]
+               net_file weight_file dataset_dir test_manifest out_file
+
+Outputs binary predictions
+
+positional arguments:
+  net_file              The deploy.prototxt
+  weight_file           The .caffemodel
+  dataset_dir           The dataset to be evaluated
+  test_manifest         Images to predict
+  out_file              output file listing quad regions
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --out-dir OUT_DIR     Dump images
+  --gpu GPU             GPU to use for running the network
+  -c, --color           Training batch size
+  -m MEAN, --mean MEAN  Mean value for data preprocessing
+  -s SCALE, --scale SCALE
+                        Optional pixel scale factor
+  --image-size IMAGE_SIZE
+                        Size of images for input to prediction
+  --print-count PRINT_COUNT
+                        Print interval
+
+```
+
+The optional arguments for this script mirror those for `train.py` and should be set to the same values.  The required arguments are the same as for `test_pretrained.py`, except you manually specify `network file` (e.g., `train_val.prototxt`) and the `weight_file`.
 
 ### Rendering Masks
 
