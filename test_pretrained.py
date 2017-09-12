@@ -55,6 +55,10 @@ def main(args):
 		resolved = os.path.join(args.image_dir, f)
 		im = cv2.imread(resolved, 1)
 
+		height = im.shape[0]
+		width = im.shape[1]
+		fd.write('%s,' % f)
+
 		_input = 0.0039 * (cv2.resize(im, (256, 256)) - 127.)
 		_input = np.transpose(_input, (2, 0, 1))
 		raw = (255 * predict(net, _input, 'out', args)).astype(np.uint8)
@@ -63,7 +67,9 @@ def main(args):
 		cv2.imwrite(out_fn, raw)
 
 		post, coords = post_process(raw)
-		print coords
+		for idx2 in [1, 2, 3, 0]:
+			fd.write('%d,%d,' % (width * coords[0][idx2][0] / 256., height * coords[0][idx2][1] / 256.))
+		fd.write('\n')
 
 		out_fn = os.path.join(args.out_dir, f.replace('/','_')[:-4] + "_post.png")
 		cv2.imwrite(out_fn, post)
