@@ -63,6 +63,7 @@ def main(args):
 		cv2.imwrite(out_fn, raw)
 
 		post, coords = post_process(raw)
+		print coords
 
 		out_fn = os.path.join(args.out_dir, f.replace('/','_')[:-4] + "_post.png")
 		cv2.imwrite(out_fn, post)
