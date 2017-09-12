@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 import caffe
 import cv2
 import random
-import scipy.ndimage as nd
 
 
 
@@ -285,7 +284,7 @@ def get_args():
 	parser.add_argument("--debug-dir", default='debug', type=str, 
 				help="Dump images for debugging")
 	parser.add_argument("--print-count", default=10, type=int, 
-				help="Dump images for debugging")
+				help="How often to print progress")
 
 	args = parser.parse_args()
 	print args
