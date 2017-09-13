@@ -145,6 +145,23 @@ nvidia-docker run -v $HOST_WORK_DIRECTORY:/data tensmeyerc/icdar2017:pagenet pyt
 `$SCRIPT` is one of the scripts described above.  `$ARGS` are the normal arguments you pass to the python script.  Note that any file paths passed as arguments must begin with `/data` to be visible to the docker container.
 There is no need to download the container ahead of time.  If you have docker and nvidia-docker installed, running the above commands will pull the docker image (~2GB) if it has not been previously pulled.
 
+## Baseline Methods
+
+For those wanting to replicate the baselines we reported in our paper, we've included the two scripts we used. 
+
+`baselines/grabCutCropEval.py` evaluates using the Grab Cut approach described in the paper. As input arguments, it takes the groudtruth file, image  directory, directory to store intermediate results, and the number of threads to run the script on. It produces a file which is the ground truth file name with `_fullgrab.res` appended.
+
+```
+python grabCutCropEval.py gtFile imageDir interDir numThreads
+```
+
+`baselines/noCutMeanCutCropEval.py` evaulates using full image (no cropping) and a mean quadrilateral. The mean quadrilateral is computed from the ground truth if not given in the arguments. It prints the computed mean so it can be reused. As input arguments, the script takes the ground truth file, image directory, and optionally the four (normalized 0.0 - 1.0) quadrilateral points (in clockwise order, starting at top left). It produces two files which are the ground truth file name with `_fullno.res` and `_fullmean.res` appended. 
+
+```
+python noCutMeanCutCropEval.py gtFile imageDir [mean_x1 mean_y1 mean_x2 mean_y2 mean_x3 mean_y3 mean_x4 mean_y4]
+```
+
+
 ## Citation
 
 If you find this code useful to your research, please cite our paper:
